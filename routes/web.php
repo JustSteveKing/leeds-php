@@ -14,4 +14,3 @@ Route::get('/dashboard', function () {
         'posts' => Post::query()->where('user_id', auth()->id())->get(),
     ]);
 })->middleware(['auth'])->name('dashboard');
-

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Models\Concerns\HasSlug;
 use Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -37,6 +38,7 @@ use Illuminate\Support\Str;
  */
 class Category extends Model
 {
+    use HasSlug;
     use HasFactory;
 
     protected $fillable = [
@@ -49,15 +51,6 @@ class Category extends Model
     public $casts = [
         'active' => 'boolean',
     ];
-
-    public static function boot()
-    {
-        parent::boot();
-
-        static::creating(fn (Model $model) =>
-            $model->slug = Str::slug($model->title),
-        );
-    }
 
     public function posts(): HasMany
     {

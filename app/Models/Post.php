@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\PostStatus;
+use App\Models\Builders\PostBuilder;
+use App\Models\Collections\PostCollection;
+use App\Models\Concerns\HasSlug;
 use Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -48,6 +51,7 @@ use Illuminate\Support\Str;
  */
 class Post extends Model
 {
+    use HasSlug;
     use HasFactory;
 
     protected $fillable = [
@@ -68,15 +72,6 @@ class Post extends Model
         'pubilshed_at' => 'timestamp',
     ];
 
-    public static function boot()
-    {
-        parent::boot();
-
-        static::creating(fn (Model $model) =>
-            $model->slug = Str::slug($model->title),
-        );
-    }
-
     public function author(): BelongsTo
     {
         return $this->belongsTo(
@@ -90,6 +85,20 @@ class Post extends Model
         return $this->belongsTo(
             related: Category::class,
             foreignKey: 'category_id',
+        );
+    }
+
+    public function newCollection(array $models = []): PostCollection
+    {
+        return new PostCollection(
+            items: $models,
+        );
+    }
+
+    public function newEloquentBuilder($query): PostBuilder
+    {
+        return new PostBuilder(
+            query: $query,
         );
     }
 }
