@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth'])->prefix('app')->as('app:')->group(function () {
+Route::middleware(['web', 'auth'])->prefix('app')->as('app:')->group(function () {
     Route::prefix('posts')->as('posts:')->group(function () {
         Route::get('/', App\Http\Controllers\Web\Backend\Posts\IndexController::class)->name('index');
         Route::get('create', App\Http\Controllers\Web\Backend\Posts\CreateController::class)->name('create');

@@ -18,6 +18,7 @@ parameters:
   ruleset:
     App:
       - Laravel
+      - Contract
     Contract:
       - Laravel
 imports:
