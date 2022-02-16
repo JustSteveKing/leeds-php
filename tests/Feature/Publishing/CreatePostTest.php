@@ -19,7 +19,7 @@ it('shows the create form', function () {
     get(
         route('app:posts:create'),
     )->assertStatus(Http::OK)->assertSee('Create a new Post');
-});
+})->group('publishing');
 
 it('can create a new post', function () {
     $user = User::factory()->create();
@@ -41,4 +41,4 @@ it('can create a new post', function () {
     )->assertStatus(Http::FOUND);
 
     expect(Post::query()->count())->toEqual(1);
-});
+})->group('publishing');

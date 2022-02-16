@@ -17,4 +17,4 @@ it('can show a list of posts on the dashboard', function () {
     get(
         route('dashboard'),
     )->assertStatus(Http::OK)->assertSee($posts->first()->title);
-});
+})->group('dashboard');
